@@ -24,6 +24,7 @@ app.use(cors({
       "http://localhost:5173",
       "http://localhost:5175",
       "http://localhost:5176",
+      "https://your-frontend-url.onrender.com",
       process.env.FRONTEND_URL,
       process.env.ADMIN_URL,
     ].filter(Boolean);
@@ -62,24 +63,24 @@ mongoose.connect(process.env.MONGO_URL, {
   serverSelectionTimeoutMS: 5000,
   socketTimeoutMS: 45000,
 })
-.then(async () => {
-  console.log("✅ MongoDB connected successfully");
+  .then(async () => {
+    console.log("✅ MongoDB connected successfully");
 
-  // Auto-create FIRST10 coupon if it doesn't exist
-  const exists = await Coupon.findOne({ code: 'FIRST10' });
-  if (!exists) {
-    await Coupon.create({
-      code: 'FIRST10',
-      discountType: 'percentage',
-      discountValue: 10,
-      minOrder: 0,
-      expiryDate: new Date('2099-12-31'),
-      isActive: true,
-    });
-    console.log("✅ FIRST10 coupon created (10% off for new users)");
-  }
-})
-.catch((err) => console.error("❌ DB connection error:", err));
+    // Auto-create FIRST10 coupon if it doesn't exist
+    const exists = await Coupon.findOne({ code: 'FIRST10' });
+    if (!exists) {
+      await Coupon.create({
+        code: 'FIRST10',
+        discountType: 'percentage',
+        discountValue: 10,
+        minOrder: 0,
+        expiryDate: new Date('2099-12-31'),
+        isActive: true,
+      });
+      console.log("✅ FIRST10 coupon created (10% off for new users)");
+    }
+  })
+  .catch((err) => console.error("❌ DB connection error:", err));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
