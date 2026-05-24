@@ -1,0 +1,23 @@
+import { SignUp } from '@clerk/clerk-react';
+
+const SignUpPage = () => {
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '60px 20px',
+      minHeight: '60vh',
+      background: 'white',
+    }}>
+      <SignUp
+        routing="path"
+        path="/sign-up"
+        signInUrl="/sign-in"
+        forceRedirectUrl="/"
+      />
+    </div>
+  );
+};
+
+export default SignUpPage;
